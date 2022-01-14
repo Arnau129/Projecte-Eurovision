@@ -55,5 +55,3 @@ public class Eurovision {
     }
 
 }
-//que dices flipao xddd
-//esto esta funcionando :D
