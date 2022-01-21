@@ -152,9 +152,19 @@ public class Utils {
 
         for (int i = 0; i < vector.length; i++) {
             boolean encontrat = false;
-            int aleatori = Numero_aleatori(max, min);
+            boolean prohibit = false;
+            int aleatori = 0;
+            do {
+                aleatori = Numero_aleatori(max, min);
+                if (aleatori == num_prohibit) {
+                    prohibit = false;
+                }
+                else{
+                    prohibit = true;
+                }
+            } while (!prohibit);
             for (int j = 0; j < i; j++) {
-                if (vector[j] == aleatori || vector[j] == num_prohibit) {
+                if (vector[j] == aleatori) {
                     encontrat = true;
                 }
             }
