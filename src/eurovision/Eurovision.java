@@ -28,9 +28,15 @@ public class Eurovision {
         for (int i = 0; i < pais.length; i++) {
             Votar(pais, i);
         }
-        //Cridem la funcio que imprimira un llistat amb els diferents paisos
-        MostrarPaisos(pais);
+        //Cridem la funcio que imprimira els diferents paisos en dues columnes
+        MostrarPaisosOrdenats(pais);
 
+    }
+    static void MostrarPaisosOrdenats(Pais[] pais){
+        for (int i = 0; i < 13; i++) {
+            System.out.printf("\n %3s %-15s %3s %6s %3s %-15s %3s \n", (i + 1)+".", pais[i].nom, pais[i].vots, "", (i + 14)+".", pais[i + 13].nom, pais[i + 13].vots);
+        }
+    
     }
 
     static void MostrarPaisos(Pais[] pais) {
