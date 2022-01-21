@@ -32,11 +32,24 @@ public class Eurovision {
         MostrarPaisosOrdenats(pais);
 
     }
-    static void MostrarPaisosOrdenats(Pais[] pais){
-        for (int i = 0; i < 13; i++) {
-            System.out.printf("\n %3s %-15s %3s %6s %3s %-15s %3s \n", (i + 1)+".", pais[i].nom, pais[i].vots, "", (i + 14)+".", pais[i + 13].nom, pais[i + 13].vots);
-        }
+
+    static void MostrarPaisosOrdenats(Pais[] pais) {
     
+    for (int x = 0; x < pais.length; x++) {
+        for (int i = 0; i < pais.length-x-1; i++) {
+            if(pais[i].vots < pais[i+1].vots){
+                Pais[] tmp = new Pais[1];
+                tmp[0] = pais[i+1];
+                pais[i+1]= pais[i];
+                pais[i] = tmp[0];
+            }
+        }
+    }
+        for (int i = 0; i < 13; i++) {
+            System.out.printf("\n %3s %-15s %3s %6s %3s %-15s %3s \n", (i + 1) + ".", pais[i].nom, pais[i].vots, "", (i + 14) + ".", pais[i + 13].nom, pais[i + 13].vots);
+            
+        }
+
     }
 
     static void MostrarPaisos(Pais[] pais) {
@@ -44,7 +57,7 @@ public class Eurovision {
             System.out.println("El nom del pais es " + pais[i].nom + " i te " + pais[i].vots + " vots.");
         }
     }
-   
+
     static void IntroduirPaisos(Pais[] pais, Scanner scan) {
         for (int i = 0; i < pais.length; i++) {
             System.out.print("Introdueix el nom del pais: ");
@@ -53,7 +66,7 @@ public class Eurovision {
             pais[i].nom = nomPais;
         }
     }
-   
+
     static void IntroduirPaisosAutomaticament(Pais[] pais, Scanner scan) {
         for (int i = 0; i < pais.length; i++) {
             String nomPais = paisPosicio(i);
@@ -61,7 +74,7 @@ public class Eurovision {
             pais[i].nom = nomPais;
         }
     }
-   
+
     static String paisPosicio(int posicio) {
         //Marquem el nombre de paisos que hi haura
         final int NUMPAISOS = 26;
@@ -97,19 +110,19 @@ public class Eurovision {
         String nomPais = pais[posicio];
         return nomPais;
     }
-   
+
     static void Votar(Pais[] pais, int pais_votador) {
         //Marquem el numero de vegades que es pot votar
         final int PAISOS_A_VOTAR = 10;
         //Creem un vector on guardar a quins paisos votar i l'omplim
         int[] seleccio_paisos = new int[PAISOS_A_VOTAR];
-        for (int i = 0; i < seleccio_paisos.length; i++){
+        for (int i = 0; i < seleccio_paisos.length; i++) {
             seleccio_paisos[i] = -1;
         }
-        Utils.Cadena_sense_repeticio_amb_numero_prohibit(seleccio_paisos, (pais.length-1), 0, pais_votador);
+        Utils.Cadena_sense_repeticio_amb_numero_prohibit(seleccio_paisos, (pais.length - 1), 0, pais_votador);
         //Creem un vector on guardar quants punts donara i l'omplim
         int[] punts = new int[PAISOS_A_VOTAR];
-        for (int i = 0; i < punts.length; i++){
+        for (int i = 0; i < punts.length; i++) {
             punts[i] = -1;
         }
         Utils.Cadena_sense_repeticio(punts, 10, 1);
@@ -125,5 +138,5 @@ public class Eurovision {
         }
 
     }
-   
+
 }
