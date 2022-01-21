@@ -25,10 +25,6 @@ public class Eurovision {
         //Cridem la funcio que demanara que l'usuari introdueixi la informacio sobre els diferents paisos
         IntroduirPaisosAutomaticament(pais, scan);
         //Cridem les votacions per cada pais
-        int[] seleccio_paisos = new int[10];
-        for (int i = 0; i < 9; i++) {
-            Utils.Cadena_sense_repeticio_amb_numero_prohibit(seleccio_paisos, pais.length, 0, i);
-        }
         for (int i = 0; i < pais.length; i++) {
             Votar(pais, i);
         }
@@ -101,14 +97,16 @@ public class Eurovision {
         final int PAISOS_A_VOTAR = 10;
         //Creem un vector on guardar a quins paisos votar i l'omplim
         int[] seleccio_paisos = new int[PAISOS_A_VOTAR];
-        for (int i = 0; i < PAISOS_A_VOTAR; i++) {
-            Utils.Cadena_sense_repeticio_amb_numero_prohibit(seleccio_paisos, pais.length, 0, pais_votador);
+        for (int i = 0; i < seleccio_paisos.length; i++){
+            seleccio_paisos[i] = -1;
         }
+        Utils.Cadena_sense_repeticio_amb_numero_prohibit(seleccio_paisos, (pais.length-1), 0, pais_votador);
         //Creem un vector on guardar quants punts donara i l'omplim
         int[] punts = new int[PAISOS_A_VOTAR];
-        for (int i = 0; i < PAISOS_A_VOTAR; i++) {
-            Utils.Cadena_sense_repeticio(punts, pais.length, 0);
+        for (int i = 0; i < punts.length; i++){
+            punts[i] = -1;
         }
+        Utils.Cadena_sense_repeticio(punts, 10, 1);
         //Canviem que es pugui votar amb 9 punts per 12
         for (int i = 0; i < punts.length; i++) {
             if (punts[i] == 9) {
@@ -117,7 +115,7 @@ public class Eurovision {
         }
         //Sumem ls punts
         for (int i = 0; i < 10; i++) {
-            pais[seleccio_paisos[i]].vots = punts[i];
+            pais[seleccio_paisos[i]].vots = pais[seleccio_paisos[i]].vots + punts[i];
         }
 
     }
