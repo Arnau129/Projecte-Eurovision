@@ -20,17 +20,26 @@ public class Eurovision {
         Scanner scan = new Scanner(System.in);
         //Marquem el nombre de paisos que hi haura
         final int NUMPAISOS = 26;
+        final int WINNER_LOOSER = 2;
         //Creem el vector per guardar el nom dels paisos junt els seus vots
         Pais[] pais = new Pais[NUMPAISOS];
+        int[][] matriu_premis = new int[WINNER_LOOSER][NUMPAISOS];
+        int[] guanyadors = new int[NUMPAISOS];
+        int[] loosers = new int[NUMPAISOS];
         //Cridem la funcio que demanara que l'usuari introdueixi la informacio sobre els diferents paisos
         IntroduirPaisosAutomaticament(pais, scan);
         //Cridem les votacions per cada pais
         for (int i = 0; i < pais.length; i++) {
-            Votar(pais, i);
+            Votar(pais, matriu_premis, i);
         }
         //Cridem la funcio que imprimira els diferents paisos en dues columnes
         MostrarPaisosOrdenats(pais);
-
+        for (int i = 0; i < matriu_premis.length; i++){
+            for(int j = 0; j < matriu_premis[i].length; j++){
+                System.out.println(matriu_premis[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     static void MostrarPaisosOrdenats(Pais[] pais) {
@@ -111,25 +120,25 @@ public class Eurovision {
         return nomPais;
     }
 
-    static void Votar(Pais[] pais, int pais_votador) {
+    static void Votar(Pais[] pais, int[][] premis, int pais_votador) {
         //Marquem el numero de vegades que es pot votar
         final int PAISOS_A_VOTAR = 10;
+        final int WINNER = 0;
+        final int LOOSER = 1;
         //Creem un vector on guardar a quins paisos votar i l'omplim
         int[] seleccio_paisos = new int[PAISOS_A_VOTAR];
-        for (int i = 0; i < seleccio_paisos.length; i++) {
-            seleccio_paisos[i] = -1;
-        }
         Utils.Cadena_sense_repeticio_amb_numero_prohibit(seleccio_paisos, (pais.length - 1), 0, pais_votador);
+        for (int i = 0; i < seleccio_paisos.length; i++) {
+            Rellenar_Looser(premis, seleccio_paisos[i]);
+        }
         //Creem un vector on guardar quants punts donara i l'omplim
         int[] punts = new int[PAISOS_A_VOTAR];
-        for (int i = 0; i < punts.length; i++) {
-            punts[i] = -1;
-        }
         Utils.Cadena_sense_repeticio(punts, 10, 1);
         //Canviem que es pugui votar amb 9 punts per 12
         for (int i = 0; i < punts.length; i++) {
             if (punts[i] == 9) {
                 punts[i] = 12;
+                Rellenar_Winner(premis, seleccio_paisos[i]);
             }
         }
         //Sumem ls punts
@@ -137,6 +146,21 @@ public class Eurovision {
             pais[seleccio_paisos[i]].vots = pais[seleccio_paisos[i]].vots + punts[i];
         }
 
+    }
+
+    static void Rellenar_Winner(int[][] premis, int pais) {
+        final int WINNER = 0;
+        premis[WINNER][pais]++;
+    }
+
+    static void Rellenar_Looser(int[][] premis, int pais) {
+        final int LOOSER = 1;
+        premis[LOOSER][pais]++;
+    }
+
+    static int Escollir_Winners(int[][] premis, int[] winners) {
+        final int WINNER = 0;
+        return 0;
     }
 
 }
