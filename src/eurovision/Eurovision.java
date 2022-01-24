@@ -24,8 +24,6 @@ public class Eurovision {
         //Creem el vector per guardar el nom dels paisos junt els seus vots
         Pais[] pais = new Pais[NUMPAISOS];
         int[][] matriu_premis = new int[WINNER_LOOSER][NUMPAISOS];
-        int[] guanyadors = new int[NUMPAISOS];
-        int[] loosers = new int[NUMPAISOS];
         //Cridem la funcio que demanara que l'usuari introdueixi la informacio sobre els diferents paisos
         IntroduirPaisosAutomaticament(pais, scan);
         //Cridem les votacions per cada pais
@@ -34,29 +32,34 @@ public class Eurovision {
         }
         //Cridem la funcio que imprimira els diferents paisos en dues columnes
         MostrarPaisosOrdenats(pais);
-        for (int i = 0; i < matriu_premis.length; i++){
-            for(int j = 0; j < matriu_premis[i].length; j++){
+        for (int i = 0; i < matriu_premis.length; i++) {
+            for (int j = 0; j < matriu_premis[i].length; j++) {
                 System.out.println(matriu_premis[i][j]);
             }
             System.out.println();
         }
+        int[] guanyadors = EscollirWinners(matriu_premis);
+        int[] loosers = EscollirLoosers(matriu_premis);
+        MostrarGuanyadors(guanyadors, pais);
+        System.out.println();
+        MostrarPerdedors(loosers, pais);
     }
 
     static void MostrarPaisosOrdenats(Pais[] pais) {
-    
-    for (int x = 0; x < pais.length; x++) {
-        for (int i = 0; i < pais.length-x-1; i++) {
-            if(pais[i].vots < pais[i+1].vots){
-                Pais[] tmp = new Pais[1];
-                tmp[0] = pais[i+1];
-                pais[i+1]= pais[i];
-                pais[i] = tmp[0];
+
+        for (int x = 0; x < pais.length; x++) {
+            for (int i = 0; i < pais.length - x - 1; i++) {
+                if (pais[i].vots < pais[i + 1].vots) {
+                    Pais[] tmp = new Pais[1];
+                    tmp[0] = pais[i + 1];
+                    pais[i + 1] = pais[i];
+                    pais[i] = tmp[0];
+                }
             }
         }
-    }
         for (int i = 0; i < 13; i++) {
             System.out.printf("\n %3s %-15s %3s %6s %3s %-15s %3s \n", (i + 1) + ".", pais[i].nom, pais[i].vots, "", (i + 14) + ".", pais[i + 13].nom, pais[i + 13].vots);
-            
+
         }
 
     }
@@ -158,9 +161,67 @@ public class Eurovision {
         premis[LOOSER][pais]++;
     }
 
-    static int Escollir_Winners(int[][] premis, int[] winners) {
+    static int[] EscollirWinners(int[][] premis) {
         final int WINNER = 0;
-        return 0;
+        int numeroGran = premis[WINNER][0];//inicialitzem al primer numero del vector premis per a que sigui l'inicialitzador
+        int contadorGuanyadors = 0;//Aquest contador l'usarem a l'hora de guardar els guanyadors
+        for (int i = 0; i < premis[WINNER].length; i++) {//Bucle per trobar el numero més gran del contador de 12 vots
+            if (premis[WINNER][i] > numeroGran) {
+                numeroGran = premis[WINNER][i];
+            }
+        }
+        int guanyadors = NumeroWinnersLoosers(premis, numeroGran, WINNER);//Trobem quants guanyadors hi han per crear el vector
+        int[] winners = new int[guanyadors];//Creem el vector apartir de quants guanyadors hi han
+        for (int i = 0; i < premis[WINNER].length; i++) {//Bucle per a que passi per tota la matriu de premis i guardi els guanyadors al vector winners
+            if (premis[WINNER][i] == numeroGran) {
+                winners[contadorGuanyadors] = i;
+                contadorGuanyadors++;
+            }
+        }
+        return winners;
     }
 
+    static int[] EscollirLoosers(int[][] premis) {
+        final int LOOSER = 1;
+        int numeroPetit = premis[LOOSER][0];//inicialitzem al primer numero del vector premis per a que sigui l'inicialitzador
+        int contadorLoosers = 0;//Aquest contador l'usarem a l'hora de guardar els perdedors
+        for (int i = 0; i < premis[LOOSER].length; i++) {//Bucle per trobar el numero més gran del contador de no vots
+            if (premis[LOOSER][i] < numeroPetit) {
+                numeroPetit = premis[LOOSER][i];
+            }
+        }
+        int perdedors = NumeroWinnersLoosers(premis, numeroPetit, LOOSER);//Trobem quants perdedors hi han per crear el vector
+        int[] loosers = new int[perdedors];//Creem el vector apartir de quants perdedors hi han
+        for (int i = 0; i < premis[LOOSER].length; i++) {//Bucle per a que passi per tota la matriu de premis i guardi els perdedors al vector loosers
+            if (premis[LOOSER][i] == numeroPetit) {
+                loosers[contadorLoosers] = i;
+                contadorLoosers++;
+            }
+        }
+        return loosers;
+    }
+
+    static int NumeroWinnersLoosers(int[][] premis, int numero, int winnerlooser) {//Funcio per returnar quants loosers o winners hi han
+        int winnersloosers = 0;
+        for (int i = 0; i < premis[winnerlooser].length; i++) {
+            if (premis[winnerlooser][i] == numero) {
+                winnersloosers++;
+            }
+        }
+        return winnersloosers;
+    }
+
+    static void MostrarGuanyadors(int[] guanyadors, Pais[] pais) {
+        System.out.println("Els guanyadors son:");
+        for (int i = 0; i < guanyadors.length; i++) {
+            System.out.println(pais[guanyadors[i]].nom);
+        }
+    }
+
+    static void MostrarPerdedors(int[] perdedors, Pais[] pais) {
+        System.out.println("Els perdedors son:");
+        for (int i = 0; i < perdedors.length; i++) {
+            System.out.println(pais[perdedors[i]].nom);
+        }
+    }
 }
