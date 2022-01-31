@@ -25,7 +25,7 @@ public class Eurovision {
         Pais[] pais = new Pais[NUMPAISOS];
         int[][] matriu_premis = new int[WINNER_LOOSER][NUMPAISOS];
         //Cridem la funcio que demanara que l'usuari introdueixi la informacio sobre els diferents paisos
-        IntroduirPaisosAutomaticament(pais, scan);
+        IntroduirPaisos(pais, scan);
         //Cridem les votacions per cada pais
         for (int i = 0; i < pais.length; i++) {
             Votar(pais, matriu_premis, i);
@@ -64,21 +64,39 @@ public class Eurovision {
 
     }
 
-    static void MostrarPaisos(Pais[] pais) {
-        for (int i = 0; i < pais.length; i++) {
-            System.out.println("El nom del pais es " + pais[i].nom + " i te " + pais[i].vots + " vots.");
-        }
-    }
-
     static void IntroduirPaisos(Pais[] pais, Scanner scan) {
         for (int i = 0; i < pais.length; i++) {
             System.out.print("Introdueix el nom del pais: ");
-            String nomPais = scan.nextLine();
+            String nomPais = TestStringBlacklist(scan);
             pais[i] = new Pais();
             pais[i].nom = nomPais;
         }
     }
 
+    static String TestStringBlacklist(Scanner scan) {
+        String entradaCorrecta;
+        String temp;
+        boolean paraula = false;
+        do {
+            int i =0;
+            temp = scan.nextLine();
+            if (temp.equals("") || temp.equals(" ")){
+                System.out.println("No s'ha introduit un pais correctament, torna-ho a intentar: ");
+            }
+            else{
+                if (temp.charAt(i) < 65 || temp.charAt(i) > 122){
+                    System.out.println("No s'ha introduit un pais correctament, torna-ho a intentar: ");
+                }
+                else{
+                    paraula = true;
+                }
+            }
+            i++;
+        } while (!paraula);
+        entradaCorrecta = temp;
+        return entradaCorrecta;
+    }
+   
     static void IntroduirPaisosAutomaticament(Pais[] pais, Scanner scan) {
         for (int i = 0; i < pais.length; i++) {
             String nomPais = paisPosicio(i);
@@ -126,8 +144,6 @@ public class Eurovision {
     static void Votar(Pais[] pais, int[][] premis, int pais_votador) {
         //Marquem el numero de vegades que es pot votar
         final int PAISOS_A_VOTAR = 10;
-        final int WINNER = 0;
-        final int LOOSER = 1;
         //Creem un vector on guardar a quins paisos votar i l'omplim
         int[] seleccio_paisos = new int[PAISOS_A_VOTAR];
         Utils.Cadena_sense_repeticio_amb_numero_prohibit(seleccio_paisos, (pais.length - 1), 0, pais_votador);
@@ -212,14 +228,24 @@ public class Eurovision {
     }
 
     static void MostrarGuanyadors(int[] guanyadors, Pais[] pais) {
-        System.out.println("Els guanyadors son:");
+        if (guanyadors.length == 1) {
+             System.out.println("El guanyador del premi “TheBest” és:");
+        }
+        else{
+             System.out.println("Els guanyadors del premi “TheBest” son:");
+        }
         for (int i = 0; i < guanyadors.length; i++) {
             System.out.println(pais[guanyadors[i]].nom);
         }
     }
 
     static void MostrarPerdedors(int[] perdedors, Pais[] pais) {
-        System.out.println("Els perdedors son:");
+        if (perdedors.length == 1) {
+             System.out.println("El guanyador del segon premi “TheLooser” és:");
+        }
+        else{
+             System.out.println("Els guanyadors del segon premi “TheLooser” son:");
+        }
         for (int i = 0; i < perdedors.length; i++) {
             System.out.println(pais[perdedors[i]].nom);
         }
