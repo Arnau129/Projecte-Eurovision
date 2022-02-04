@@ -10,17 +10,15 @@ import utils.Utils;
 
 /**
  * Classe on estan totes les funcions
- *
  * @author Angel, Arnau, Andrés
  */
 public class Funcions {
 
     /**
      * Funció que borra tots els vots, per si es vol tornar a fer el programa.
-     *
-     * @param pais
+     * @param pais és el vector on estan guardat tots els països.
      */
-    static void Buidarvots(Pais[] pais) {
+    public static void Buidarvots(Pais[] pais) {
         for (int i = 0; i < pais.length; i++) {
             pais[i].vots = 0;
         }
@@ -54,7 +52,7 @@ public class Funcions {
      *
      * @param pais és el vector on estan guardat tots els països.
      */
-    static void MostrarPaisosOrdenats(Pais[] pais) {
+    public static void MostrarPaisosOrdenats(Pais[] pais) {
         for (int x = 0; x < pais.length; x++) {
             for (int i = 0; i < pais.length - x - 1; i++) {
                 if (pais[i].vots < pais[i + 1].vots) {
@@ -79,7 +77,7 @@ public class Funcions {
      * @param scan és el scanner que es crea en la class on implementes la
      * funció.
      */
-    static void IntroduirPaisos(Pais[] pais, Scanner scan) {
+    public static void IntroduirPaisos(Pais[] pais, Scanner scan) {
         for (int i = 0; i < pais.length; i++) {
             System.out.print("Introdueix el nom del pais: ");
             String nomPais = TestStringBlacklist(scan);
@@ -96,7 +94,7 @@ public class Funcions {
      * funció.
      * @return boolean que diu si el país s'introdueix correctament o no.
      */
-    static String TestStringBlacklist(Scanner scan) {
+    public static String TestStringBlacklist(Scanner scan) {
         String entradaCorrecta;
         String temp;
         boolean paraula = false;
@@ -126,7 +124,7 @@ public class Funcions {
      * @param premis és la matriu on es guarden els winners i els loosers.
      * @param pais_votador és el país que està votant.
      */
-    static void Votar(Pais[] pais, int[][] premis, int pais_votador) {
+    public static void Votar(Pais[] pais, int[][] premis, int pais_votador) {
         //Marquem el numero de vegades que es pot votar
         final int PAISOS_A_VOTAR = 10;
         //Creem un vector on guardar a quins paisos votar i l'omplim
@@ -157,7 +155,7 @@ public class Funcions {
      * @param premis és la matriu on es guarden els winners i els loosers.
      * @param pais és el país al qual se li suma 1 si ha obtingut un vot de 12.
      */
-    static void Rellenar_Winner(int[][] premis, int pais) {
+    public static void Rellenar_Winner(int[][] premis, int pais) {
         final int WINNER = 0;
         premis[WINNER][pais]++;
     }
@@ -168,7 +166,7 @@ public class Funcions {
      * @param premis és la matriu on es guarden els winners i els loosers.
      * @param pais és el país al qual se li suma 1 si ha obtingut qualsevol vot.
      */
-    static void Rellenar_Looser(int[][] premis, int pais) {
+    public static void Rellenar_Looser(int[][] premis, int pais) {
         final int LOOSER = 1;
         premis[LOOSER][pais]++;
     }
@@ -181,7 +179,7 @@ public class Funcions {
      * @return un vector on estan guardat tots els països que han guanyat el
      * premi "TheBest".
      */
-    static int[] EscollirWinners(int[][] premis) {
+    public static int[] EscollirWinners(int[][] premis) {
         final int WINNER = 0;
         int numeroGran = premis[WINNER][0];//inicialitzem al primer numero del vector premis per a que sigui l'inicialitzador
         int contadorGuanyadors = 0;//Aquest contador l'usarem a l'hora de guardar els guanyadors
@@ -209,7 +207,7 @@ public class Funcions {
      * @return un vector on estan guardat tots els països que han guanyat el
      * premi "TheLooser".
      */
-    static int[] EscollirLoosers(int[][] premis) {
+    public static int[] EscollirLoosers(int[][] premis) {
         final int LOOSER = 1;
         int numeroPetit = premis[LOOSER][0];//inicialitzem al primer numero del vector premis per a que sigui l'inicialitzador
         int contadorLoosers = 0;//Aquest contador l'usarem a l'hora de guardar els perdedors
@@ -239,7 +237,7 @@ public class Funcions {
      * @param winnerlooser és on tries que vols treure, o winners o loosers.
      * @return un vector on estan tots els països que són winners o loosers.
      */
-    static int NumeroWinnersLoosers(int[][] premis, int numero, int winnerlooser) {//Funcio per returnar quants loosers o winners hi han
+    public static int NumeroWinnersLoosers(int[][] premis, int numero, int winnerlooser) {//Funcio per returnar quants loosers o winners hi han
         int winnersloosers = 0;
         for (int i = 0; i < premis[winnerlooser].length; i++) {
             if (premis[winnerlooser][i] == numero) {
@@ -255,7 +253,7 @@ public class Funcions {
      * @param guanyadors és el vector on estan tots els guanyadors.
      * @param pais és el vector de països.
      */
-    static void MostrarGuanyadors(int[] guanyadors, Pais[] pais) {
+    public static void MostrarGuanyadors(int[] guanyadors, Pais[] pais) {
         if (guanyadors.length == 1) {
             System.out.println("El guanyador del premi “TheBest” és:");
         } else {
@@ -272,7 +270,7 @@ public class Funcions {
      * @param perdedors és el vector on estan tots els perdedors.
      * @param pais és el vector de països.
      */
-    static void MostrarPerdedors(int[] perdedors, Pais[] pais) {
+    public static void MostrarPerdedors(int[] perdedors, Pais[] pais) {
         if (perdedors.length == 1) {
             System.out.println("El guanyador del segon premi “TheLooser” és:");
         } else {
