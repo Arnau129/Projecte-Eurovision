@@ -14,12 +14,17 @@ class Pais {
 }
 
 public class Eurovision {
-
+    /**
+     * Classe main on s'executa el programa.
+     * @param args 
+     */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         //Marquem el nombre de paisos que hi haura
         final int NUMPAISOS = 26;
         final int WINNER_LOOSER = 2;
+        boolean repetir= true;
+        do{
         //Creem el vector per guardar el nom dels paisos junt els seus vots
         Pais[] pais = new Pais[NUMPAISOS];
         int[][] matriu_premis = new int[WINNER_LOOSER][NUMPAISOS];
@@ -37,5 +42,7 @@ public class Eurovision {
         Funcions.MostrarGuanyadors(guanyadors, pais);
         System.out.println();
         Funcions.MostrarPerdedors(loosers, pais);
+        repetir = Funcions.Repetirprograma(scan);
+        }while(repetir);
     }  
 }

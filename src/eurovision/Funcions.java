@@ -14,6 +14,25 @@ import utils.Utils;
  */
 public class Funcions {
     /**
+     * Funció per a saber si l'usuari vol que acabi el programa o que torni a fer el concurs un altre vegada.
+     * @param scan és el scanner que es crea en la class on implementes la funció.
+     * @return la decisió de l'usuari.
+     */
+    static boolean Repetirprograma(Scanner scan){
+        boolean comprovant = true;
+        System.out.println("Vols fer un altre vegade el concurs?(Y/N)");
+        String entrada = scan.nextLine();
+        if (entrada.equals("Y") || entrada.equals("y")) {
+            comprovant = true;
+        }else if (entrada.equals("N") || entrada.equals("n")) {
+            comprovant = false;
+        }else {
+            System.out.println("Valor incorrecte.");
+            comprovant=Repetirprograma(scan);
+        }
+        return comprovant;
+    }
+    /**
      * Funció per a ordenar el vector de països passat en la funció.
      * @param pais és el vector on estan guardat tots els països.
      */
